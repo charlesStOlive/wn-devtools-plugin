@@ -1,0 +1,1 @@
+<?= $this->wakaController->renderUpdate({% if has_secondary_tab %}true{% endif %}) ?>

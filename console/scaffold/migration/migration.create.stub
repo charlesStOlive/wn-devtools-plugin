@@ -1,0 +1,34 @@
+<?php
+
+use Winter\Storm\Database\Schema\Blueprint;
+use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('{{ table }}', function (Blueprint $table) {
+            $table->id();
+            {% if has_workflow %}$table->string('state')->nullable();{% endif %} 
+            {% if has_workflow %}$table->string('wf')->nullable();{% endif %} 
+            {% if has_reorder %}$table->integer('sort_order');{% endif %} 
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('{{ table }}');
+    }
+};

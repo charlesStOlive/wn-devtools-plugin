@@ -1,0 +1,24 @@
+<?php
+
+use Winter\Storm\Database\Schema\Blueprint;
+use Winter\Storm\Database\Updates\Migration;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('{{ table_name }}', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            {% if has_workflow %}$table->string('state');{% endif %} 
+            {% if has_workflow %}$table->string('wf');{% endif %} 
+            {% if has_reorder %}$table->integer('sort_order');{% endif %} 
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('{{ table_name }}');
+    }
+};

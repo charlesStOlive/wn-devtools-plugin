@@ -1,0 +1,59 @@
+# ===================================
+#  WakaController | Workflow | Productor |  Behavior Config
+# ===================================
+
+
+modelClass: {{ plugin_namespace }}\Models\{{ studly_model }}
+backendUrl: {{ controller_url }}
+
+workflow: {% if has_workflow %}true{% else %}false{% endif %} 
+
+{% if has_productor %}
+productor:
+    permissions: {{ plugin_id }}::*.{{ lower_model }}.*
+    drivers: 
+        # mjmler: 
+        # pdfer:
+        #     dsMap: full
+        # worder: 
+        #    dsMap: full
+        # excelerRelationExporter:
+        # excelerRelationImporter:
+{% endif %}
+
+controllerConfig:
+    breadcrump:
+        inSettings: {% if in_settings%}true{% else %}false{% endif %} 
+        title: {{ model_lang_key }}.label
+        rows: 
+            index: 
+                label: {{ controller_lang_key }}.label
+                url: {{ controller_url }} 
+    index:
+        base:
+            create: 
+                show: true
+                permissions: [{{ plugin_id }}.*]
+            reorder: 
+                show: {% if has_reorder %}true{% else %}false{% endif %}  
+                permissions: []
+            delete: 
+                show: true
+                permissions: [{{ plugin_id }}.*]
+        # partials:
+        #     index_btn:
+        #         url: $/{{ plugin_folder }}/controllers/{{ lower_name }}/_index_btn.php
+    update:
+        # partials:
+        #     update_btn:
+        #         url: $/{{ plugin_folder }}/controllers/{{ lower_name }}/_update_btn.php
+
+{% if has_reorder %} 
+reorder:
+    title: waka.wutils::lang.global.reorder 
+    # reorderRelations:
+    #     model:
+    #         title: Réordonner le {model} # Reorder Title
+    #         nameFrom: name # Attribute name
+    #         relationName: setups   # Model Class name
+{% endif %}

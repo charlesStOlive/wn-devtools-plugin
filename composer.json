@@ -1,0 +1,15 @@
+{
+    "name": "waka/wn-devtools-plugin",
+    "description": "Plugin Utils",
+    "type": "winter-plugin",
+    "require": {
+        "brick/varexporter": "^0.3.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Charles Saint Olive",
+            "email": "contact@notilac.fr"
+        }
+    ]
+}
