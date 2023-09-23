@@ -1,0 +1,22 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+{{ snake_relation_name }}:
+    label: waka.salesforce::lang.logsf.errors
+    manage:
+        form: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/fields.yaml
+        # list: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/columns.yaml
+        scope: ready
+        showSorting: true
+        # showSearch: true
+    view:
+        list: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/columns.yaml
+        toolbarButtons: false #create|update|delete|add|remove|refresh|linkk|unlink
+        # defaultSort:
+        #     column: updated_at
+        #     direction: desc
+        # recordsPerPage: 20
+        # recordUrl: 
+    # pivot: 
+    #     form: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/fields_pivot.yaml

@@ -1,0 +1,32 @@
+main:
+    label: {{ model_lang_key }}.label
+    fields:
+        # name:
+        #     label: {{ model_lang_key }}.name
+        # state:
+        #     label: {{ model_lang_key }}.state
+        #     type: workflow
+        # state_logs:
+        #     label:  {{ model_lang_key }}.state_logs
+        #     type: workflowStates
+        # xrelation: 
+        #     label: {{ model_lang_key }}.xrelation 
+        #     type: relation
+        #     dsMap: main
+        # total:
+        #     label: {{ model_lang_key }}.total
+        #     type: euro
+        # udated_at:
+        #     label: {{ model_lang_key }}.udated_at
+        #     type: date
+        #     format: d/m/Y
+        # description:
+        #     label: wcli.tarificateur::lang.models.projet.description
+        #     type: md
+        
+
+resumer: 
+    # label: {{ model_lang_key }}.label
+    # fields:
+    #     name:
+    #         label: {{ model_lang_key }}.label.name

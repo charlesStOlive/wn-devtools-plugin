@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: '{{ plugin_id }}::lang.models.general.id'
+        disabled: true
+{% if has_workflow %}
+    state: 
+        label: {{ plugin_id }}::lang.models.general.state
+        type: workflow
+{% endif %}

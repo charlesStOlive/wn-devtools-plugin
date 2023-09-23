@@ -1,0 +1,38 @@
+@color-primary: {{primary}};
+@color-secondary: {{secondary}};
+@color-accent: {{accent}};
+@text-color: {{ text | default('#141414') }};
+@color-gd: #787978;
+@color-gl: #E0E0E0;
+@color-dark: #2F4250;
+@color-white: #FFF;
+@font-size: 12px;
+@prefix: w-;
+
+
+@pm-step: 1; 
+@base-margin: 0.5rem;
+
+
+
+@link-color: @color-primary;
+@heading-color: @color-dark;
+@body-bg:@color-white;
+
+@header-color: @color-dark;
+@content-bg: @color-white;
+@body-border-color: @color-primary;
+@content-inner-bg: @color-white;
+@subcopy-border-color: @color-gl;
+@footer-color: @color-gd;
+@table-border-color: @color-white;
+@button-text-color: @color-white;
+@button-primary-bg: @color-primary;
+@button-accent-bg: @color-accent;
+@button-secondary-bg: @color-secondary;
+@button-positive-bg: green;
+@button-negative-bg: red;
+@button-warning-bg: orange;
+@panel-bg:  @color-gl;
+@promotion-bg:  @color-gl;
+@promotion-border-color:   @color-white;
