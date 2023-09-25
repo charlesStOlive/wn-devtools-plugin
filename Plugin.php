@@ -37,6 +37,7 @@ class Plugin extends PluginBase
         $this->registerConsoleCommand('waka:model', 'Waka\DevTools\Console\CreateModel');
         $this->registerConsoleCommand('waka:migration', 'Waka\DevTools\Console\CreateMigration');
         $this->registerConsoleCommand('waka:relation', 'Waka\DevTools\Console\CreateRelation');
+        $this->registerConsoleCommand('waka:syncRepo', 'Waka\DevTools\Console\SyncRepo');
         //$this->registerConsoleCommand('waka.mc', 'Waka\DevTools\Console\CreateModelController');
 
     }
