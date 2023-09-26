@@ -23,7 +23,7 @@ create:
 # Update page
 update:
     title: backend::lang.form.update_title
-    redirect: {{ controller_url }}
+    redirect: {{ controller_url }}/update/:id
     redirectClose: {{ controller_url }}
 
 # Preview page

@@ -14,6 +14,9 @@ class {{ studly_name }} extends Controller
     public $implement = [
         \Backend\Behaviors\FormController::class,
         \Backend\Behaviors\ListController::class,
+{% if has_relation %}
+        \Backend\Behaviors\RelationController::class,
+{% endif %}
         \Waka\Wutils\Behaviors\WakaControllerBehavior::class,
 {% if has_productor %}
         \Waka\Productor\Behaviors\ProductorBehavior::class,
@@ -25,6 +28,8 @@ class {{ studly_name }} extends Controller
         \Waka\Workflow\Behaviors\WorkflowBehavior::class,
 {% endif %}
     ];
+
+    public $requiredPermissions = ['{{ plugin_id }}.*'];
 
     public function __construct()
     {

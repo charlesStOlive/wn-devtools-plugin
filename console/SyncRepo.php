@@ -66,6 +66,9 @@ class SyncRepo extends Command
             $command = "robocopy \"$wakaPath\" \"$folderRepoPath\" /MIR /XD \"$excludeDir\" 2>&1";
             $output = shell_exec($command);
             $this->info($output);
+            chdir($folderRepoPath);
+            $gitOutput = shell_exec('git add . 2>&1');
+            $this->info($gitOutput);
         }
         
         
