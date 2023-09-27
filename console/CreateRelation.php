@@ -67,7 +67,7 @@ class CreateRelation extends BaseScaffoldCommand
         }
         $vars['model'] = $model;
         $relationPLugin = $this->option('relation_pLugin') ?: $this->argument('plugin');
-        trace_log($relationPLugin);
+        //trace_log($relationPLugin);
         $pluginCode = $this->getPluginIdentifier($relationPLugin);
         $parts = explode('.', $pluginCode);
         if (count($parts) !== 2) {

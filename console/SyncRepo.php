@@ -61,8 +61,8 @@ class SyncRepo extends Command
         foreach($repoPath as $repo) {
             $folderRepoPath =  $envRepoPath.'/wn-'.$repo.'-plugin';
             $wakaPath = base_path('/plugins/waka/'.$repo);
-            trace_log($folderRepoPath);
-            trace_log($wakaPath);
+            //trace_log($folderRepoPath);
+            //trace_log($wakaPath);
             $command = "robocopy \"$wakaPath\" \"$folderRepoPath\" /MIR /XD \"$excludeDir\" 2>&1";
             $output = shell_exec($command);
             $this->info($output);

@@ -206,7 +206,7 @@ class CreateMigration extends BaseScaffoldCommand
 
         $vars = array_merge(array_fill_keys($this->finalTraits,true), $vars);
 
-        trace_log('var create mig',$vars);
+        //trace_log('var create mig',$vars);
 
 
         if (!empty($table)) {
