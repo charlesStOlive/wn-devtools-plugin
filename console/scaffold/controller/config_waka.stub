@@ -10,7 +10,7 @@ workflow: {% if has_workflow %}true{% else %}false{% endif %}
 
 {% if has_productor %}
 productor:
-    permissions: {{ plugin_id }}::*.{{ lower_model }}.*
+    models: {{ plugin_id }}::*.{{ lower_model }}.*
     drivers: 
         # mjmler: 
         # pdfer:

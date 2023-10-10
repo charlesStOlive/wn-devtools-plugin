@@ -29,7 +29,7 @@ class Plugin extends PluginBase
     {
         $this->registerConsoleCommand('waka:trad', 'Waka\DevTools\Console\PluginTrad');
         $this->registerConsoleCommand('waka:excelTrad', 'Waka\DevTools\Console\ExcelTrad');
-        $this->registerConsoleCommand('waka:checktrads', 'Waka\DevTools\Console\PluginscheckAllTrad');
+        $this->registerConsoleCommand('waka:checktrads', 'Waka\DevTools\Console\CheckTrads');
         $this->registerConsoleCommand('waka:tradauto', 'Waka\DevTools\Console\TradautoCommand');
         $this->registerConsoleCommand('waka.uicolors', 'Waka\DevTools\Console\CreateUiColors');
         $this->registerConsoleCommand('waka:all', 'Waka\DevTools\Console\CreateAll');
@@ -92,14 +92,6 @@ class Plugin extends PluginBase
     public function registerPermissions(): array
     {
         return []; // Remove this line to activate
-
-        return [
-            'waka.devtools.some_permission' => [
-                'tab' => 'waka.devtools::lang.plugin.name',
-                'label' => 'waka.devtools::lang.permissions.some_permission',
-                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
-            ],
-        ];
     }
 
     /**

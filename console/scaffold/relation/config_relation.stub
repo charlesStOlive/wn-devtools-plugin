@@ -3,7 +3,7 @@
 # ===================================
 
 {{ snake_relation_name }}:
-    label: waka.salesforce::lang.logsf.errors
+    label: {{ model_lang_key }}.{{ snake_relation_name }}
     manage:
         form: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/fields.yaml
         # list: $/{{ plugin_relation_url }}/models/{{ lower_relation_name }}/columns.yaml

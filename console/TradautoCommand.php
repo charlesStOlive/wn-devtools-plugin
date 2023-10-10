@@ -4,6 +4,7 @@ namespace Waka\DevTools\Console;
 
 use Illuminate\Console\Command;
 use System\Console\BaseScaffoldCommand;
+use Winter\Storm\Parse\PHP\ArrayFile;
 
 class TradautoCommand extends BaseScaffoldCommand
 {
@@ -27,6 +28,8 @@ class TradautoCommand extends BaseScaffoldCommand
 
         }
 
+        
+
 
         switch ($action) {
             case 'create':
@@ -34,6 +37,9 @@ class TradautoCommand extends BaseScaffoldCommand
                 break;
             case 'insert':
                 $result = $this->insert($text, $translatedText);
+                break;
+            case 'show':
+                $result = $this->show($text);
                 break;
             case 'get':
             default:
@@ -44,32 +50,35 @@ class TradautoCommand extends BaseScaffoldCommand
         $this->info($result);
     }
 
-    private function create(string $text)
-    {
-        $basePath = base_path('plugins');
-        $codeData = $this->parseCodeLang($text);
-        $langContent = [];
-        array_set($langContent, $codeData['code'], $codeData['code']);
-        $filePath = $basePath. '/' .$codeData['vendor']. '/' .$codeData['plugin'].'/lang/fr/'.$codeData['file'].'.php';
-        $fileContent = '<?php' . PHP_EOL . PHP_EOL;
-        $fileContent .= 'return ' . \Brick\VarExporter\VarExporter::export($langContent) . ';' . PHP_EOL;
-        file_put_contents($filePath, $fileContent);
-        //trace_log("Created: {$text}");
-        return "Created: {$text}";
-    }
-
     private function insert(string $text, string $translatedText)
     {
         // Insérez la logique d'insertion ici.
         //trace_log('insert');
         $codeData = $this->parseCodeLang($text);
         $filePath = $this->getFilePath($codeData);
-        //trace_log($codeData);
-        //trace_log($filePath);
+        trace_log($codeData);
+        trace_log($filePath);
+        trace_log($translatedText);
+        ArrayFile::open($filePath)->set([$codeData['code'] => $translatedText])->write();
         //trace_log($translatedText);
-        $this->insertCodeInFile($filePath, $codeData['code'], $translatedText);
+        // $this->insertCodeInFile($filePath, $codeData['code'], $translatedText);
         //trace_log("Inserted: {$text} - {$translatedText}");
         return "Inserted: {$text} - {$translatedText}";
+    }
+
+    private function show(string $text)
+    {
+        // Insérez la logique d'insertion ici.
+        //trace_log('insert');
+        // $codeData = $this->parseCodeLang($text);
+        // $filePath = $this->getFilePath($codeData);
+        // trace_log($codeData);
+        $langContent = $this->extractLanguageFiles(['wcli', 'waka']);
+        $toJson = json_encode($langContent);
+        //trace_log($translatedText);
+        // $this->insertCodeInFile($filePath, $codeData['code'], $translatedText);
+        //trace_log("Inserted: {$text} - {$translatedText}");
+        return $toJson;
     }
 
     private function get(string $text)
@@ -96,16 +105,6 @@ class TradautoCommand extends BaseScaffoldCommand
         }
         //trace_log(json_encode($return));
         return json_encode($return);
-    }
-
-    private function insertCodeInFile($filePath, $code, $string) {
-        $langContent = include $filePath;
-        array_set($langContent, $code, $string);
-        //trace_log($langContent);
-        $fileContent = '<?php' . PHP_EOL . PHP_EOL;
-        $fileContent .= 'return ' . \Brick\VarExporter\VarExporter::export($langContent) . ';' . PHP_EOL;
-        file_put_contents($filePath, $fileContent);
-
     }
 
     private function getCodeFromFile($filePath, $code) {
@@ -137,5 +136,34 @@ class TradautoCommand extends BaseScaffoldCommand
             'file' => $langFile,
             'code' => $finalCode,
         ];
+    }
+
+    private function extractLanguageFiles(array $vendors)
+    {
+        $basePath = base_path('plugins');
+        $langArray = [];
+
+        foreach ($vendors as $vendor) {
+            $vendorPath = $basePath . '/' . $vendor;
+
+            // Vérifie si le dossier du vendor existe
+            if (is_dir($vendorPath)) {
+                // Récupère la liste des dossiers de plugins
+                $pluginFolders = glob($vendorPath . '/*', GLOB_ONLYDIR);
+
+                foreach ($pluginFolders as $pluginFolder) {
+                    $pluginName = basename($pluginFolder);
+                    $langPath = $pluginFolder . '/lang/fr/lang.php';
+
+                    // Vérifie si le dossier lang/fr existe pour ce plugin
+                    if (file_exists($langPath)) {
+                        $langContent = include $langPath;
+                        $langArray[$vendor . '.' . $pluginName]['lang'] = $langContent;
+                    }
+                }
+            }
+        }
+
+        return $langArray;
     }
 }
