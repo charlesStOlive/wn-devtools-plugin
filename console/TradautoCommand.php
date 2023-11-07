@@ -56,9 +56,9 @@ class TradautoCommand extends BaseScaffoldCommand
         //trace_log('insert');
         $codeData = $this->parseCodeLang($text);
         $filePath = $this->getFilePath($codeData);
-        trace_log($codeData);
-        trace_log($filePath);
-        trace_log($translatedText);
+        //trace_log($codeData);
+        //trace_log($filePath);
+        //trace_log($translatedText);
         ArrayFile::open($filePath)->set([$codeData['code'] => $translatedText])->write();
         //trace_log($translatedText);
         // $this->insertCodeInFile($filePath, $codeData['code'], $translatedText);
