@@ -22,7 +22,7 @@ productor:
 {% endif %}
 
 controllerConfig:
-    breadcrump:
+    breadcrumb:
         inSettings: {% if in_settings%}true{% else %}false{% endif %} 
         title: {{ model_lang_key }}.label
         rows: 
