@@ -155,9 +155,7 @@ class CheckTrads extends BaseScaffoldCommand
                 $this->info('Cette clef est mal formaté et na pas été réutilisé dans le fichier finale'.$key.' => '.$value);
             }
         }
-
-
-
+        $this->recursive_ksort($newLangFile);
         return [$newLangFile,  $keysAdded, $keysDeleted];
     }
 
