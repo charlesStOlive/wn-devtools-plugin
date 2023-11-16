@@ -38,12 +38,16 @@ class SyncRepo extends Command
         if (empty($repoPath)) {
             $this->info('Il n y a pas de liste de plugins/waka dans le fichier env REPOS_TO_SYNC');
             return;
-        }  else {
+        } else {
             $repoPath = explode(',', $repoPath);
         }
         $excludeDir = '.git';
         $envRepoPath = env('SRC_REPO');
-        $commitAndPush = $this->ask('Voulez vous faire un comit et un push si il y a des modifications dans les repos ? laisser à null pour ne pas le faire.', null);
+        $commitAndPush = $this->ask('Voulez vous faire un commit et push si il y a des modifications dans les repos ? laisser à null pour ne pas le faire.', true);
+        $commitName = null;
+        if ($commitAndPush) {
+            $commitName = $this->ask('Quel est le nom global du commit ? ', 'update plugin');
+        }
         foreach ($repoPath as $repo) {
             $folderRepoPath =  $envRepoPath . '/wn-' . $repo . '-plugin';
             $wakaPath = base_path('/plugins/waka/' . $repo);
@@ -58,15 +62,18 @@ class SyncRepo extends Command
             exec('git diff --cached --quiet', $output, $return_var);
             // Si $return_var est différent de 0, alors il y a des changements à committer
             if ($return_var !== 0) {
-                $this->info("Des changements sont en attente de commit pour le repo : ".$repo);
-                if($commitAndPush) {
-                    $this->info("Je procède au comit & push pour le repo : ".$repo);
+                $this->info("Des changements sont en attente de commit pour le repo : " . $repo);
+                if ($commitAndPush) {
+                    $this->info("Je procède au comit & push pour le repo : " . $repo);
+                    // Logique du commit
+                    shell_exec('git commit -m "' . escapeshellcmd($commitName) . '" 2>&1');
+                    // Logique du push
+                    shell_exec('git push 2>&1');
+                    $this->info("Commit et push effectués pour le repo : " . $repo);
                 }
-                // ... vous pouvez exécuter `git commit` ici si vous le souhaitez
             } else {
                 $this->info("Aucun changement à committer.");
             }
-            
         }
     }
 }
