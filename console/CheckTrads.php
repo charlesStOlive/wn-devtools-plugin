@@ -19,7 +19,7 @@ class CheckTrads extends BaseScaffoldCommand
      * @var string The name and signature of this command.
      */
     protected $signature = 'waka:checktrads
-        {--s|simulate : Simuler ne pas créer les fichiers}';
+        {--lg= : Force une langue autre que fr.}';
 
     /**
      * The console command description.
@@ -34,6 +34,13 @@ class CheckTrads extends BaseScaffoldCommand
      * @var string
      */
     protected $type = 'lang';
+
+    /**
+     * Lang.
+     *
+     * @var string
+     */
+    protected $lg = 'fr';
 
     /**
      * A mapping of stub to generated file.
@@ -52,31 +59,16 @@ class CheckTrads extends BaseScaffoldCommand
     {
         $directoriesPlugin = ['wcli', 'waka'];
         $directoriesAll = ['wcli', 'waka', '../themes'];
+        trace_log($this->option('lg'));
+        if($lg = $this->option('lg')) {
+            $this->lg = $lg;
+        }
         //
-        //Pour combiner des fichiers 
-        // $this->combine($directoriesPlugin, $directoriesAll);
-
         $analysed = $this->getAnalysedFiles($directoriesAll);
         $existing = $this->extractLanguageFiles($directoriesPlugin);
-        // trace_log($analysed['nested']);
-        // trace_log('------------------------------------------------------****------------------------------------');
-        // trace_log($existing);
 
         [$DotedlangsContent, $keysAdded, $keyDeleted] = $this->synchronizeArrays($analysed['nested'], $existing);
-
-        //trace_log('keyDeleted--',$keyDeleted);
-        // trace_log('keysAdded--', $keysAdded);
-        //trace_log($DotedlangsContent);
         $this->updateLangFiles($DotedlangsContent);
-        // trace_log($langsContent);
-        // $result = $this->mergeAndFindDifferenceRecursive($analysed['nested'], $existing);
-        // trace_log($result);
-        // $this->createLanguageFiles($langsContent);
-
-
-
-
-
     }
 
     function updateLangFiles($dotedVendorPluginLangs) {
@@ -90,24 +82,26 @@ class CheckTrads extends BaseScaffoldCommand
             . DIRECTORY_SEPARATOR
             . 'lang'
             . DIRECTORY_SEPARATOR
-            . 'fr'
+            . $this->lg
             . DIRECTORY_SEPARATOR
             . 'lang.php'
         );
         if (!file_exists($langFilePath)) {
             // $this->makeDirectory($langFilePath);
             $codeFile = $pluginExploded[0] . '.' . $pluginExploded[1] .'::lang';
-            $comment = 'Le fichier existe pas il ne sera pas crée' . str_replace(base_path(), '', $codeFile);
+            $comment = 'Le fichier existe pas il ne sera pas crée : ' . str_replace(base_path(), '', $codeFile);
+            $this->comment($comment);
        } else {
             unlink($langFilePath);
             $comment = 'File updated: ' . str_replace(base_path(), '', $langFilePath);
             ArrayFile::open($langFilePath)->set($langs)->write();
+            $this->info($comment);
         }
 
         // Store the localization messages to the determined file path
         
         // Inform the user
-        $this->comment($comment);
+        
         }
     }
 
@@ -200,7 +194,8 @@ class CheckTrads extends BaseScaffoldCommand
 
                 foreach ($pluginFolders as $pluginFolder) {
                     $pluginName = basename($pluginFolder);
-                    $langPath = $pluginFolder . '/lang/fr/lang.php';
+                    trace_log($this->lg);
+                    $langPath = $pluginFolder . sprintf('/lang/%s/lang.php', $this->lg);
 
                     // Vérifie si le dossier lang/fr existe pour ce plugin
                     if (file_exists($langPath)) {
@@ -404,7 +399,7 @@ class CheckTrads extends BaseScaffoldCommand
 
                 foreach ($pluginFolders as $pluginFolder) {
                     $pluginName = basename($pluginFolder);
-                    $langPath = $pluginFolder . '/lang/fr';
+                    $langPath = $pluginFolder . '/lang/'.$this->lang;
 
                     if (is_dir($langPath)) {
                         $newLangContent = [];
