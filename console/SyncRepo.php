@@ -54,7 +54,7 @@ class SyncRepo extends Command
             // Copie des fichiers avec robocopy
             $command = "robocopy \"$wakaPath\" \"$folderRepoPath\" /MIR /XD \"$excludeDir\" 2>&1";
             exec($command, $output, $returnVar);
-            trace_log($returnVar);
+            //trace_log($returnVar);
             if ($returnVar >3) { // robocopy retourne 1 pour une copie réussie avec des fichiers copiés
                 $this->error("Erreur lors de la copie des fichiers pour {$repo}:\n" . implode("\n", $output));
                 continue;

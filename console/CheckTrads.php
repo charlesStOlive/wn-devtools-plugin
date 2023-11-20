@@ -59,7 +59,7 @@ class CheckTrads extends BaseScaffoldCommand
     {
         $directoriesPlugin = ['wcli', 'waka'];
         $directoriesAll = ['wcli', 'waka', '../themes'];
-        trace_log($this->option('lg'));
+        //trace_log($this->option('lg'));
         if($lg = $this->option('lg')) {
             $this->lg = $lg;
         }
@@ -194,7 +194,7 @@ class CheckTrads extends BaseScaffoldCommand
 
                 foreach ($pluginFolders as $pluginFolder) {
                     $pluginName = basename($pluginFolder);
-                    trace_log($this->lg);
+                    //trace_log($this->lg);
                     $langPath = $pluginFolder . sprintf('/lang/%s/lang.php', $this->lg);
 
                     // Vérifie si le dossier lang/fr existe pour ce plugin
