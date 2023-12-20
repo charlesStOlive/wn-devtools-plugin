@@ -1,6 +1,18 @@
 @color-primary: {{primary}};
+@color-dark-primary: lighten({{primary}}, 15%);
+@color-darkest-primary: darken({{primary}}, 35%);
+@color-light-primary: lighten({{primary}}, 15%);
+@color-lightest-primary: lighten({{primary}}, 35%);
 @color-secondary: {{secondary}};
+@color-dark-secondary: darken({{secondary}}, 15%);
+@color-darkest-secondary: darken({{secondary}}, 35%);
+@color-light-secondary: lighten({{secondary}}, 15%);
+@color-lightest-secondary: lighten({{secondary}}, 35%);
 @color-accent: {{accent}};
+@color-dark-accent: darken({{accent}}, 15%);
+@color-darkest-accent: darken({{accent}}, 35%);
+@color-light-accent: lighten({{accent}}, 15%);
+@color-lightest-accent: lighten({{accent}}, 35%);
 @text-color: {{ text | default('#141414') }};
 @color-gd: #787978;
 @color-gl: #E0E0E0;
@@ -12,8 +24,6 @@
 
 @pm-step: 1; 
 @base-margin: 0.5rem;
-
-
 
 @link-color: @color-primary;
 @heading-color: @color-dark;
