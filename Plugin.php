@@ -31,7 +31,7 @@ class Plugin extends PluginBase
         $this->registerConsoleCommand('waka:excelTrad', 'Waka\DevTools\Console\ExcelTrad');
         $this->registerConsoleCommand('waka:checktrads', 'Waka\DevTools\Console\CheckTrads');
         $this->registerConsoleCommand('waka:tradauto', 'Waka\DevTools\Console\TradautoCommand');
-        $this->registerConsoleCommand('waka.uicolors', 'Waka\DevTools\Console\CreateUiColors');
+        $this->registerConsoleCommand('waka.replaceModules', 'Waka\DevTools\Console\ReplaceModules');
         $this->registerConsoleCommand('waka:all', 'Waka\DevTools\Console\CreateAll');
         $this->registerConsoleCommand('waka:controller', 'Waka\DevTools\Console\CreateController');
         $this->registerConsoleCommand('waka:model', 'Waka\DevTools\Console\CreateModel');

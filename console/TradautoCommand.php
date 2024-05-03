@@ -72,7 +72,7 @@ class TradautoCommand extends BaseScaffoldCommand
         //trace_log('insert');
         // $codeData = $this->parseCodeLang($text);
         // $filePath = $this->getFilePath($codeData);
-        // trace_log($codeData);
+        // //trace_log($codeData);
         $langContent = $this->extractLanguageFiles(['wcli', 'waka']);
         $toJson = json_encode($langContent);
         //trace_log($translatedText);

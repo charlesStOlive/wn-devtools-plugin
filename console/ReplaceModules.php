@@ -4,14 +4,14 @@ use Winter\Storm\Scaffold\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Mexitek\PHPColors\Color;
 use Twig;
-class CreateUiColors extends GeneratorCommand
+class ReplaceModules extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'waka:uicolors';
+    protected $name = 'waka:ReplaceModules';
 
     /**
      * The console command description.
@@ -32,11 +32,28 @@ class CreateUiColors extends GeneratorCommand
      *
      * @var array
      */
-    protected $stubs = [
+
+    protected $stubsForBehaviors = [
+        'behavior_replace/FormController.stub' => '/modules/backend/behaviors/FormController.php',
+        'behavior_replace/js/RelationController.stub' => '/modules/backend/behaviors/RelationController.php',
+    ];
+
+    protected $stubsForRepeater = [
+        'repeater_replace/partials/_repeater_item.stub' => 'modules/backend/formwidgets/repeater/partials/_repeater_item.php',
+        'repeater_replace/js/repeater.stub' => '/modules/backend/formwidgets/repeater/assets/js/repeater.js',
+        'repeater_replace/Repeater.stub' => '/modules/backend/formwidgets/Repeater.php',
+        
+    ];
+
+
+    protected $stubsForColors = [
         'ui_less/global.variables.stub' => '/modules/system/assets/ui/less/global.variables.less',
+        'ui_less/global.mixins.triangle.stub' => '/modules/system/assets/ui/less/global.mixins.triangle.less',
         'ui_less/vars.stub' => '/plugins/wcli/wconfig/assets/css/vars.less',
         
     ];
+
+    
 
     /**
      * Execute the console command.
@@ -48,9 +65,32 @@ class CreateUiColors extends GeneratorCommand
         //$this->vars = $this->processVars($this->prepareVars());
         $this->vars = $this->prepareVars();
 
+        $stubsForBehaviors = array_keys($this->stubsForBehaviors);
+
+        foreach ($stubsForBehaviors as $stub) {
+            $this->makeStub($stub);
+        }
+
+        $this->info('update des behaviors successfull.');
+
+
+        $stubsForRepeater = array_keys($this->stubsForRepeater);
+
+        foreach ($stubsForRepeater as $stub) {
+            $this->makeStub($stub);
+        }
+
+        $this->info('update du repeater successfull.');
+
         //trace_log($this->vars);
 
-        $this->makeStubs();
+        $stubsForColors = array_keys($this->stubsForColors);
+
+        foreach ($stubsForColors as $stub) {
+            $this->makeStub($stub);
+        }
+
+        $this->info('update des fichiers couleurs.');
 
         $sourceFilePath = $this->getSourcePath() . '/../../../../modules/system/assets/ui/less';
 
@@ -62,9 +102,9 @@ class CreateUiColors extends GeneratorCommand
             $this->files->put($filePath, $stringContent);
         }
 
-        $this->info($this->type . ' created successfully.');
+        $this->info('Less created successfully.');
 
-        $this->call('winter:util', ['name' => 'compile less']);
+        $this->call('mix:compile');
     }
 
     public function updateColorContent($content) {
@@ -175,31 +215,6 @@ class CreateUiColors extends GeneratorCommand
             'primary_light' => $primary_light,
             'primary_light2' => $primary_light2,
             'replace' => $replaceColors,
-        ];
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    // protected function getArguments()
-    // {
-    //     return [
-    //         ['plugin', InputArgument::REQUIRED, 'The name of the plugin. Eg: RainLab.Blog'],
-    //         ['model', InputArgument::REQUIRED, 'The name of the model. Eg: Post'],
-    //     ];
-    // }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['force', null, InputOption::VALUE_NONE, 'Overwrite existing files with generated ones.'],
         ];
     }
 }
