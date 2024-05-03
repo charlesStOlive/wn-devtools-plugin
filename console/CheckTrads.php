@@ -240,7 +240,7 @@ class CheckTrads extends BaseScaffoldCommand
                         ]);
                     }
                 } else {
-                    // //trace_log('refusé : '.trace_log($file->getFilename()));
+                    //trace_log('refusé : '.trace_log($file->getFilename()));
                 }
             }
         }
@@ -249,7 +249,7 @@ class CheckTrads extends BaseScaffoldCommand
         $strings =  $strings->filter(function ($fileGroup, $vpKey) {
             $lang = \Lang::get($fileGroup['full']);
             if ($lang == $fileGroup['full']) {
-                // //trace_log('Pas de langue pour ' . $fileGroup['full']);
+                //trace_log('Pas de langue pour ' . $fileGroup['full']);
                 //La trad n'existe pas on check si c'est un settings. 
                 if (\Config::get($fileGroup['full'])) {
                     //trace_log('une config ! ' . $fileGroup['full']);
@@ -272,14 +272,14 @@ class CheckTrads extends BaseScaffoldCommand
         // });
 
         $nestedCollection = $Collection->map(function ($fileGroup, $vpKey) {
-            // //trace_log('--file group--');
-            // //trace_log($fileGroup);
+            //trace_log('--file group--');
+            //trace_log($fileGroup);
             return $fileGroup->map(function ($codeGroup, $fileKey) {
                 $combined = [];
                 foreach ($codeGroup as $item) {
-                    // //trace_log($item);
+                    //trace_log($item);
                     $code = $item['code'] . '.' . $item['key'];
-                    // //trace_log($code);
+                    //trace_log($code);
                     array_set($combined, $code, null);
                 }
                 array_walk_recursive($combined, function (&$value, $key) {
@@ -291,7 +291,7 @@ class CheckTrads extends BaseScaffoldCommand
                 return $combined;
             });
         });
-        // //trace_log($nestedCollection->toArray());
+        //trace_log($nestedCollection->toArray());
         return [
             'nested' => $nestedCollection->toArray(),
             // 'flatten' => $flattFileVpCollection->toArray(),

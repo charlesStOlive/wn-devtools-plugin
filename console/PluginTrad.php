@@ -156,7 +156,7 @@ class PluginTrad extends GeneratorCommand
                 //trace_log($this->codeLang.'---------------------------------------');
                 try {
                     // $translation = \GoogleTranslate::translate($row, 'fr',$this->codeLang);
-                    // //trace_log($translation);
+                    //trace_log($translation);
                     // $rowTraducted = $translation['translated_text'] ?? null;
                     $newMap[$key] =  'tofr:'.$row;
                 } catch (\Exception $ex) {
