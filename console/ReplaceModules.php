@@ -34,22 +34,22 @@ class ReplaceModules extends GeneratorCommand
      */
 
     protected $stubsForBehaviors = [
-        'behavior_replace/FormController.stub' => '/modules/backend/behaviors/FormController.php',
-        'behavior_replace/js/RelationController.stub' => '/modules/backend/behaviors/RelationController.php',
+        'replace_modules/behaviors/FormController.stub' => '/modules/backend/behaviors/FormController.php',
+        'replace_modules/behaviors/RelationController.stub' => '/modules/backend/behaviors/RelationController.php',
     ];
 
     protected $stubsForRepeater = [
-        'repeater_replace/partials/_repeater_item.stub' => 'modules/backend/formwidgets/repeater/partials/_repeater_item.php',
-        'repeater_replace/js/repeater.stub' => '/modules/backend/formwidgets/repeater/assets/js/repeater.js',
-        'repeater_replace/Repeater.stub' => '/modules/backend/formwidgets/Repeater.php',
+        'replace_modules/formwidgets/partials/_repeater_item.stub' => 'modules/backend/formwidgets/repeater/partials/_repeater_item.php',
+        'replace_modules/formwidgets/js/repeater.stub' => '/modules/backend/formwidgets/repeater/assets/js/repeater.js',
+        'replace_modules/formwidgets/Repeater.stub' => '/modules/backend/formwidgets/Repeater.php',
         
     ];
 
 
     protected $stubsForColors = [
-        'ui_less/global.variables.stub' => '/modules/system/assets/ui/less/global.variables.less',
-        'ui_less/global.mixins.triangle.stub' => '/modules/system/assets/ui/less/global.mixins.triangle.less',
-        'ui_less/vars.stub' => '/plugins/wcli/wconfig/assets/css/vars.less',
+        'replace_modules/ui_less/global.variables.stub' => '/modules/system/assets/ui/less/global.variables.less',
+        'replace_modules/ui_less/global.mixins.triangle.stub' => '/modules/system/assets/ui/less/global.mixins.triangle.less',
+        'replace_modules/ui_less/vars.stub' => '/plugins/wcli/wconfig/assets/css/vars.less',
         
     ];
 
@@ -68,7 +68,7 @@ class ReplaceModules extends GeneratorCommand
         $stubsForBehaviors = array_keys($this->stubsForBehaviors);
 
         foreach ($stubsForBehaviors as $stub) {
-            $this->makeStub($stub);
+            $this->makeStubFromArray($this->stubsForBehaviors, $stub);
         }
 
         $this->info('update des behaviors successfull.');
@@ -77,7 +77,7 @@ class ReplaceModules extends GeneratorCommand
         $stubsForRepeater = array_keys($this->stubsForRepeater);
 
         foreach ($stubsForRepeater as $stub) {
-            $this->makeStub($stub);
+            $this->makeStubFromArray($this->stubsForRepeater, $stub);
         }
 
         $this->info('update du repeater successfull.');
@@ -87,7 +87,7 @@ class ReplaceModules extends GeneratorCommand
         $stubsForColors = array_keys($this->stubsForColors);
 
         foreach ($stubsForColors as $stub) {
-            $this->makeStub($stub);
+            $this->makeStubFromArray($this->stubsForColors, $stub);
         }
 
         $this->info('update des fichiers couleurs.');
@@ -124,15 +124,16 @@ class ReplaceModules extends GeneratorCommand
         return dirname($class->getFileName());
     }
 
-    public function makeStub($stubName)
+    public function makeStubFromArray($stubsArray, $stubName)
     {
-        //trace_log($stubName);
-        if (!isset($this->stubs[$stubName])) {
+
+        if (!isset($stubsArray[$stubName])) {
+            $this->error('stubName not exist : '.$stubName);
             return;
         }
 
         $sourceFile = $this->getSourcePath() . '/' . $stubName;
-        $destinationFile = $this->getDestinationPath() . '/' . $this->stubs[$stubName];
+        $destinationFile = $this->getDestinationPath() . '/' . $stubsArray[$stubName];
         $destinationContent = $this->files->get($sourceFile);
 
         /*
@@ -142,21 +143,9 @@ class ReplaceModules extends GeneratorCommand
         $destinationFile = Twig::parse($destinationFile, $this->vars);
 
         $this->makeDirectory($destinationFile);
-
-        /*
-         * Make sure this file does not already exist
-         */
-        // if ($this->files->exists($destinationFile)) {
-        //     $this->files->put($destinationFile, $destinationContent);
-        // } else {
-
-        // }
-        //trace_log($destinationFile);
         $this->files->put($destinationFile, $destinationContent);
-        //trace_log($destinationFile);
-        //trace_log($destinationContent);
-
-        // $this->files->put($destinationFile, $destinationContent);
+        // trace_log($destinationFile);
+        // trace_log($destinationContent);
     }
 
     /**
