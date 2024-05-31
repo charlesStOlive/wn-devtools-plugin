@@ -673,7 +673,6 @@ class RelationController extends ControllerBehavior
             $config->showCheckboxes = $this->getConfig('view[showCheckboxes]', !$this->readOnly);
             $config->recordUrl = $this->getConfig('view[recordUrl]');
             $config->customViewPath = $this->getConfig('view[customViewPath]');
-            $config->showTree = $this->getConfig('view[showTree]');
             $config->noRecordsMessage = $this->getConfig('view[noRecordsMessage]');
 
             $defaultOnClick = sprintf(
@@ -1150,9 +1149,8 @@ class RelationController extends ControllerBehavior
 
             /*
              * Has one relations will save as part of the add() call.
-             * //WAKAHOOK : ajout de !in_array($this->relationType, ['hasOne', 'morphOne'])
              */
-            if ($this->deferredBinding || !in_array($this->relationType, ['hasOne', 'morphOne'])) {
+            if ($this->deferredBinding || $this->relationType != 'hasOne') {
                 $newModel->save(null, $this->manageWidget->getSessionKey());
             }
 
@@ -1163,19 +1161,6 @@ class RelationController extends ControllerBehavior
                 if ($relation) {
                     $this->relationObject->remove($relation, $sessionKey);
                 }
-            }
-            //WAKAHOOK : ajout de morphOne case
-            if ($this->relationType === 'morphOne') {
-                // Unassign previous relation if one is already assigned
-                $relation = $this->relationObject->getParent()->{$this->relationName} ?? null;
-
-                if ($relation) {
-                    $this->relationObject->remove($relation, $sessionKey);
-                }
-                $newModel->setAttribute(
-                    $this->relationObject->getForeignKeyName(),
-                    $this->relationObject->getParentKey()
-                );
             }
 
             $this->relationObject->add($newModel, $sessionKey);

@@ -2,7 +2,7 @@
 
 namespace Waka\DevTools\Classes\Traits;
 
-use Waka\Cloudis\Classes\YamlParserRelation;
+
 use \Waka\Cloudis\Models\Settings as CloudisSettings;
 
 trait WakaConsoleHelperTrait
