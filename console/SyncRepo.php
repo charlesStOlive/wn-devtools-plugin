@@ -85,7 +85,7 @@ class SyncRepo extends Command
                     $this->info("Commit réussi pour {$repo}");
                 }
             } else {
-                $this->info("Aucun changement à committer pour {$repo}.");
+                $this->line("Aucun changement à committer pour {$repo}.");
             }
 
             // Push des changements
